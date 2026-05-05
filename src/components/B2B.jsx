@@ -1,77 +1,200 @@
-import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { wines } from '../data/wines'
 import { navigate } from '../hooks/useStore'
 
-const b2bPrices = {
-  'coteau-rouge': { '6-11':'16 000','12-23':'14 000','24+':'12 000' },
-  'cote-fianar-rouge': { '6-11':'20 000','12-23':'17 500','24+':'15 000' },
-  'marofavy': { '6-11':'32 000','12-23':'28 000','24+':'24 000' },
-  'champetre': { '6-11':'10 500','12-23':'9 000','24+':'7 500' },
-  'coteau-blanc': { '6-11':'16 000','12-23':'14 000','24+':'12 000' },
-  'cote-fianar-blanc': { '6-11':'20 000','12-23':'17 500','24+':'15 000' },
-  'maropara': { '6-11':'26 000','12-23':'22 000','24+':'19 000' },
-  'allerao': { '6-11':'22 000','12-23':'19 000','24+':'16 000' },
+const inputStyle = {
+  width: '100%', padding: '13px 16px',
+  background: 'rgba(255,255,255,.04)', border: '1px solid rgba(255,255,255,.1)',
+  color: 'var(--white)', fontFamily: 'var(--sans)', fontSize: '13px', outline: 'none', transition: 'border-color .3s',
+}
+
+function AccessGate({ onUnlock }) {
+  const [carteRouge, setCarteRouge] = useState('')
+  const [nif, setNif] = useState('')
+  const [error, setError] = useState(false)
+
+  const canSubmit = carteRouge.trim() && nif.trim()
+
+  const handleSubmit = e => {
+    e.preventDefault()
+    if (!canSubmit) return
+    setError(false)
+    onUnlock({ carteRouge: carteRouge.trim(), nif: nif.trim() })
+  }
+
+  return (
+    <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .6 }}
+      style={{ maxWidth: '480px', margin: '0 auto', textAlign: 'center' }}>
+
+      <div style={{ width: '56px', height: '56px', border: '1px solid rgba(200,169,106,.35)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 32px', background: 'rgba(200,169,106,.06)' }}>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(200,169,106,.8)" strokeWidth="1.5">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </div>
+
+      <div style={{ fontFamily: 'var(--sans)', fontSize: '10px', letterSpacing: '.3em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '16px' }}>Accès Réservé</div>
+      <h2 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(28px,4vw,44px)', fontWeight: 300, color: 'var(--white)', marginBottom: '16px', lineHeight: 1.1 }}>
+        Espace <em style={{ fontStyle: 'italic', color: 'var(--gold)' }}>Professionnel</em>
+      </h2>
+      <p style={{ fontFamily: 'var(--sans)', fontSize: '13px', color: 'rgba(245,245,243,.4)', lineHeight: 1.8, marginBottom: '40px' }}>
+        L'accès aux offres B2B est réservé aux partenaires référencés.<br/>
+        Veuillez renseigner votre <span style={{ color: 'rgba(200,169,106,.7)' }}>Carte Rouge</span> et votre <span style={{ color: 'rgba(200,169,106,.7)' }}>NIF / STATS</span>.
+      </p>
+
+      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px', textAlign: 'left' }}>
+        <div>
+          <div style={{ fontFamily: 'var(--sans)', fontSize: '9px', letterSpacing: '.2em', textTransform: 'uppercase', color: 'rgba(245,245,243,.35)', marginBottom: '8px' }}>
+            Numéro Carte Rouge *
+          </div>
+          <input
+            value={carteRouge}
+            onChange={e => { setCarteRouge(e.target.value); setError(false) }}
+            placeholder="Ex : CR-00001"
+            style={inputStyle}
+            onFocus={e => e.target.style.borderColor = 'rgba(200,169,106,.5)'}
+            onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,.1)'}
+          />
+        </div>
+        <div>
+          <div style={{ fontFamily: 'var(--sans)', fontSize: '9px', letterSpacing: '.2em', textTransform: 'uppercase', color: 'rgba(245,245,243,.35)', marginBottom: '8px' }}>
+            NIF / STATS *
+          </div>
+          <input
+            value={nif}
+            onChange={e => { setNif(e.target.value); setError(false) }}
+            placeholder="NIF ou numéro STATS"
+            style={inputStyle}
+            onFocus={e => e.target.style.borderColor = 'rgba(200,169,106,.5)'}
+            onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,.1)'}
+          />
+        </div>
+
+        {error && (
+          <div style={{ fontFamily: 'var(--sans)', fontSize: '11px', color: 'rgba(255,100,100,.75)', letterSpacing: '.05em' }}>
+            Identifiants non reconnus. Contactez-nous pour obtenir votre accès.
+          </div>
+        )}
+
+        <button type="submit" disabled={!canSubmit}
+          style={{ width: '100%', padding: '16px', background: canSubmit ? 'var(--gold)' : 'rgba(255,255,255,.05)', color: canSubmit ? 'var(--black)' : 'rgba(245,245,243,.2)', border: `1px solid ${canSubmit ? 'var(--gold)' : 'transparent'}`, fontFamily: 'var(--sans)', fontSize: '10px', fontWeight: 500, letterSpacing: '.18em', textTransform: 'uppercase', cursor: canSubmit ? 'pointer' : 'default', transition: 'all .3s', marginTop: '8px' }}
+          onMouseEnter={e => { if (canSubmit) { e.target.style.background = 'transparent'; e.target.style.color = 'var(--gold)' } }}
+          onMouseLeave={e => { if (canSubmit) { e.target.style.background = 'var(--gold)'; e.target.style.color = 'var(--black)' } }}
+        >Accéder aux offres →</button>
+      </form>
+
+      <div style={{ marginTop: '32px', padding: '20px', border: '1px solid rgba(255,255,255,.06)', background: 'rgba(255,255,255,.02)' }}>
+        <p style={{ fontFamily: 'var(--sans)', fontSize: '11px', color: 'rgba(245,245,243,.3)', lineHeight: 1.8, margin: 0 }}>
+          Pas encore partenaire ?{' '}
+          <button onClick={() => navigate('contact')} style={{ background: 'none', border: 'none', color: 'var(--gold)', fontFamily: 'var(--sans)', fontSize: '11px', cursor: 'pointer', padding: 0, textDecoration: 'underline', textUnderlineOffset: '3px' }}>
+            Contactez-nous
+          </button>{' '}pour obtenir votre Carte Rouge.
+        </p>
+      </div>
+    </motion.div>
+  )
 }
 
 export default function B2B() {
-  return (
-    <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:.5}}
-      style={{ background:'#0D0D0D', minHeight:'100vh', paddingTop:'120px', paddingBottom:'80px' }}>
-      <div style={{ maxWidth:'1200px', margin:'0 auto', padding:'0 48px' }}>
+  const [unlocked, setUnlocked] = useState(false)
+  const [credentials, setCredentials] = useState(null)
 
-        <button onClick={()=>navigate('home')} style={{ fontFamily:'var(--sans)', fontSize:'10px', letterSpacing:'.2em', textTransform:'uppercase', color:'rgba(245,245,243,.4)', background:'none', border:'none', cursor:'pointer', marginBottom:'48px', padding:0 }}
-          onMouseEnter={e=>e.currentTarget.style.color='var(--gold)'}
-          onMouseLeave={e=>e.currentTarget.style.color='rgba(245,245,243,.4)'}
+  return (
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: .5 }}
+      style={{ background: '#0D0D0D', minHeight: '100vh', paddingTop: '120px', paddingBottom: '80px' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 48px' }}>
+
+        <button onClick={() => navigate('home')} style={{ fontFamily: 'var(--sans)', fontSize: '10px', letterSpacing: '.2em', textTransform: 'uppercase', color: 'rgba(245,245,243,.4)', background: 'none', border: 'none', cursor: 'pointer', marginBottom: '48px', padding: 0 }}
+          onMouseEnter={e => e.currentTarget.style.color = 'var(--gold)'}
+          onMouseLeave={e => e.currentTarget.style.color = 'rgba(245,245,243,.4)'}
         >← Retour</button>
 
-        <div style={{ marginBottom:'60px' }}>
-          <div style={{ fontFamily:'var(--sans)', fontSize:'10px', letterSpacing:'.3em', textTransform:'uppercase', color:'var(--gold)', marginBottom:'16px' }}>Espace Professionnel</div>
-          <h1 style={{ fontFamily:'var(--serif)', fontSize:'clamp(36px,4vw,60px)', fontWeight:300, color:'var(--white)', marginBottom:'12px' }}>Portail B2B</h1>
-          <p style={{ fontFamily:'var(--sans)', fontSize:'14px', color:'rgba(245,245,243,.4)', maxWidth:'560px', lineHeight:1.7 }}>
-            Tarifs préférentiels pour restaurateurs, hôteliers et revendeurs. Commande minimum 6 bouteilles. Facturation à 30 jours pour clients référencés.
-          </p>
-        </div>
+        <AnimatePresence mode="wait">
+          {!unlocked ? (
+            <motion.div key="gate" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+              <AccessGate onUnlock={creds => { setCredentials(creds); setUnlocked(true) }} />
+            </motion.div>
+          ) : (
+            <motion.div key="content" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .5 }}>
 
-        {/* Pricing table */}
-        <div style={{ background:'rgba(255,255,255,.02)', border:'1px solid rgba(255,255,255,.06)', overflow:'hidden' }}>
-          {/* Header */}
-          <div style={{ display:'grid', gridTemplateColumns:'2fr 1fr 1fr 1fr 1fr', background:'rgba(200,169,106,.08)', borderBottom:'1px solid rgba(200,169,106,.15)', padding:'14px 24px' }}>
-            {['Cuvée','Type','6–11 btl','12–23 btl','24+ btl'].map(h=>(
-              <div key={h} style={{ fontFamily:'var(--sans)', fontSize:'9px', letterSpacing:'.2em', textTransform:'uppercase', color:'var(--gold)' }}>{h}</div>
-            ))}
-          </div>
-          {wines.map((w,i)=>(
-            <div key={w.id} style={{ display:'grid', gridTemplateColumns:'2fr 1fr 1fr 1fr 1fr', padding:'18px 24px', borderBottom: i<wines.length-1 ? '1px solid rgba(255,255,255,.04)' : 'none', transition:'background .2s' }}
-              onMouseEnter={e=>e.currentTarget.style.background='rgba(200,169,106,.04)'}
-              onMouseLeave={e=>e.currentTarget.style.background='transparent'}
-            >
-              <div style={{ fontFamily:'var(--serif)', fontSize:'16px', color:'var(--white)' }}>{w.nom}</div>
-              <div style={{ fontFamily:'var(--sans)', fontSize:'11px', color:'rgba(245,245,243,.4)' }}>{w.type}</div>
-              {['6-11','12-23','24+'].map(tier=>(
-                <div key={tier} style={{ fontFamily:'var(--sans)', fontSize:'13px', color: tier==='24+' ? 'var(--gold)' : 'rgba(245,245,243,.7)' }}>
-                  {b2bPrices[w.id]?.[tier]||'-'} Ar
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '60px', gap: '24px', flexWrap: 'wrap' }}>
+                <div>
+                  <div style={{ fontFamily: 'var(--sans)', fontSize: '10px', letterSpacing: '.3em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '16px' }}>Espace Professionnel</div>
+                  <h1 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(36px,4vw,60px)', fontWeight: 300, color: 'var(--white)', marginBottom: '12px' }}>Portail B2B</h1>
+                  <p style={{ fontFamily: 'var(--sans)', fontSize: '14px', color: 'rgba(245,245,243,.4)', maxWidth: '560px', lineHeight: 1.7 }}>
+                    Bienvenue, partenaire. Commande minimum 6 bouteilles par cuvée. Facturation à 30 jours pour clients référencés.
+                  </p>
                 </div>
-              ))}
-            </div>
-          ))}
-        </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 20px', border: '1px solid rgba(200,169,106,.2)', background: 'rgba(200,169,106,.05)', flexShrink: 0 }}>
+                  <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#4CAF50', boxShadow: '0 0 8px #4CAF5088' }} />
+                  <div>
+                    <div style={{ fontFamily: 'var(--sans)', fontSize: '9px', letterSpacing: '.2em', textTransform: 'uppercase', color: 'rgba(245,245,243,.35)' }}>Carte Rouge</div>
+                    <div style={{ fontFamily: 'var(--sans)', fontSize: '12px', color: 'var(--gold)', marginTop: '2px' }}>{credentials?.carteRouge}</div>
+                  </div>
+                </div>
+              </div>
 
-        {/* CTA */}
-        <div style={{ marginTop:'48px', display:'grid', gridTemplateColumns:'1fr 1fr', gap:'24px' }}>
-          {[
-            { title:'Commander en gros', desc:'Passez votre commande B2B directement en ligne. Livraison sous 48–72h.', cta:'Passer une commande', action:()=>navigate('b2border'), style:{ background:'var(--gold)', color:'var(--black)' } },
-            { title:'Devenir revendeur', desc:'Partenariat exclusif, conditions préférentielles, support commercial dédié.', cta:'Nous contacter', action:()=>navigate('contact'), style:{ background:'transparent', border:'1px solid rgba(200,169,106,.4)', color:'var(--gold)' } },
-          ].map(card=>(
-            <div key={card.title} style={{ padding:'40px', border:'1px solid rgba(255,255,255,.06)' }}>
-              <h3 style={{ fontFamily:'var(--serif)', fontSize:'26px', fontWeight:300, color:'var(--white)', marginBottom:'12px' }}>{card.title}</h3>
-              <p style={{ fontFamily:'var(--sans)', fontSize:'13px', color:'rgba(245,245,243,.4)', lineHeight:1.7, marginBottom:'28px' }}>{card.desc}</p>
-              <button onClick={card.action||undefined} style={{ padding:'14px 32px', fontFamily:'var(--sans)', fontSize:'10px', fontWeight:500, letterSpacing:'.18em', textTransform:'uppercase', cursor:'pointer', transition:'opacity .3s', border:'none', ...card.style }}
-                onMouseEnter={e=>e.target.style.opacity='.8'}
-                onMouseLeave={e=>e.target.style.opacity='1'}
-              >{card.cta}</button>
-            </div>
-          ))}
-        </div>
+              {/* Encart visite */}
+              <div style={{ marginBottom: '40px', padding: '28px 32px', background: 'linear-gradient(135deg, rgba(139,42,61,.12), rgba(200,169,106,.06))', border: '1px solid rgba(200,169,106,.25)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '24px', flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+                  <div style={{ width: '44px', height: '44px', border: '1px solid rgba(200,169,106,.3)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: '18px' }}>🏠</div>
+                  <div>
+                    <div style={{ fontFamily: 'var(--sans)', fontSize: '9px', letterSpacing: '.25em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '6px' }}>Vous êtes à Ambalavao ?</div>
+                    <p style={{ fontFamily: 'var(--serif)', fontSize: '16px', fontStyle: 'italic', color: 'rgba(245,245,243,.8)', margin: 0, lineHeight: 1.4 }}>
+                      Venez directement dans nos locaux — tarifs négociables, enlèvement immédiat, sélection sur mesure.
+                    </p>
+                  </div>
+                </div>
+                <button onClick={() => navigate('contact')}
+                  style={{ padding: '12px 28px', background: 'transparent', border: '1px solid rgba(200,169,106,.4)', color: 'var(--gold)', fontFamily: 'var(--sans)', fontSize: '9px', fontWeight: 500, letterSpacing: '.18em', textTransform: 'uppercase', cursor: 'pointer', transition: 'all .3s', flexShrink: 0, whiteSpace: 'nowrap' }}
+                  onMouseEnter={e => { e.target.style.background = 'var(--gold)'; e.target.style.color = 'var(--black)' }}
+                  onMouseLeave={e => { e.target.style.background = 'transparent'; e.target.style.color = 'var(--gold)' }}
+                >Prendre rendez-vous →</button>
+              </div>
+
+              {/* Catalogue sans prix */}
+              <div style={{ background: 'rgba(255,255,255,.02)', border: '1px solid rgba(255,255,255,.06)', overflow: 'hidden' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', background: 'rgba(200,169,106,.08)', borderBottom: '1px solid rgba(200,169,106,.15)', padding: '14px 24px' }}>
+                  {['Cuvée', 'Type', 'Millésime'].map(h => (
+                    <div key={h} style={{ fontFamily: 'var(--sans)', fontSize: '9px', letterSpacing: '.2em', textTransform: 'uppercase', color: 'var(--gold)' }}>{h}</div>
+                  ))}
+                </div>
+                {wines.map((w, i) => (
+                  <div key={w.id} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', padding: '18px 24px', borderBottom: i < wines.length - 1 ? '1px solid rgba(255,255,255,.04)' : 'none', transition: 'background .2s' }}
+                    onMouseEnter={e => e.currentTarget.style.background = 'rgba(200,169,106,.04)'}
+                    onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <div style={{ width: '4px', height: '20px', background: w.color, opacity: .8, flexShrink: 0 }} />
+                      <div style={{ fontFamily: 'var(--serif)', fontSize: '16px', color: 'var(--white)' }}>{w.nom}</div>
+                    </div>
+                    <div style={{ fontFamily: 'var(--sans)', fontSize: '11px', color: 'rgba(245,245,243,.4)', alignSelf: 'center' }}>{w.type}</div>
+                    <div style={{ fontFamily: 'var(--sans)', fontSize: '11px', color: 'rgba(245,245,243,.4)', alignSelf: 'center' }}>{w.millesime || '—'}</div>
+                  </div>
+                ))}
+              </div>
+
+              {/* CTA */}
+              <div style={{ marginTop: '48px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+                {[
+                  { title: 'Commander en gros', desc: 'Passez votre commande B2B directement en ligne. Livraison sous 48–72h.', cta: 'Passer une commande', action: () => navigate('b2border'), style: { background: 'var(--gold)', color: 'var(--black)', border: '1px solid var(--gold)' } },
+                  { title: 'Devenir revendeur', desc: 'Partenariat exclusif, conditions préférentielles, support commercial dédié.', cta: 'Nous contacter', action: () => navigate('contact'), style: { background: 'transparent', border: '1px solid rgba(200,169,106,.4)', color: 'var(--gold)' } },
+                ].map(card => (
+                  <div key={card.title} style={{ padding: '40px', border: '1px solid rgba(255,255,255,.06)' }}>
+                    <h3 style={{ fontFamily: 'var(--serif)', fontSize: '26px', fontWeight: 300, color: 'var(--white)', marginBottom: '12px' }}>{card.title}</h3>
+                    <p style={{ fontFamily: 'var(--sans)', fontSize: '13px', color: 'rgba(245,245,243,.4)', lineHeight: 1.7, marginBottom: '28px' }}>{card.desc}</p>
+                    <button onClick={card.action} style={{ padding: '14px 32px', fontFamily: 'var(--sans)', fontSize: '10px', fontWeight: 500, letterSpacing: '.18em', textTransform: 'uppercase', cursor: 'pointer', transition: 'opacity .3s', ...card.style }}
+                      onMouseEnter={e => e.target.style.opacity = '.8'}
+                      onMouseLeave={e => e.target.style.opacity = '1'}
+                    >{card.cta}</button>
+                  </div>
+                ))}
+              </div>
+
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </motion.div>
   )

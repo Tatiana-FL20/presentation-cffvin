@@ -18,6 +18,7 @@ import Reservation from './components/Reservation'
 import Admin from './components/Admin'
 import Contact from './components/Contact'
 import B2BOrder from './components/B2BOrder'
+import Visite from './components/Visite'
 import Footer from './components/Footer'
 import { useStore } from './hooks/useStore'
 
@@ -29,6 +30,7 @@ function HomePage() {
       <Storytelling />
       <Vignoble />
       <Catalog />
+      <Visite />
       <Footer />
     </>
   )

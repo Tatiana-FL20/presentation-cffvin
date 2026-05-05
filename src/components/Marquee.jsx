@@ -1,4 +1,4 @@
-const items = ['Vins Rouges','·','Vins Blancs','·','Produits de Madagascar','·','Depuis 1980','·','Ambalavao','·','Côte de Fianar','·','Marofavy','·','Maropara Blanc Doux','·','Allerao 2019','·']
+const items = ['Viticulteur','·','Encaveur','·','Embouteilleur','·','Grossiste','·','Vins Rouges','·','Vins Blancs','·','Depuis 1980','·','Ambalavao','·','Côte de Fianar','·','Marofavy','·','Maropara Blanc Doux','·','Allerao 2019','·']
 const doubled = [...items,...items]
 export default function Marquee() {
   return (

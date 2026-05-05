@@ -76,7 +76,7 @@ export default function Hero() {
       {/* Content */}
       <div style={{ position:'relative', textAlign:'center', padding:'0 28px', maxWidth:'900px', marginTop:'-2px' }}>
         <motion.div initial={{opacity:0,y:16}} animate={shown?{opacity:1,y:0}:{}} transition={{duration:.8,delay:.3}}
-          style={{ fontFamily:'var(--sans)', fontSize:'11px', fontWeight:400, letterSpacing:'.35em', textTransform:'uppercase', color:'var(--gold)', marginBottom:'16px' }}>
+          style={{ fontFamily:'var(--sans)', fontSize:'11px', fontWeight:400, letterSpacing:'.35em', textTransform:'uppercase', color:'var(--gold)', marginBottom:'12px' }}>
           Depuis 1980 · Ambalavao, Madagascar
         </motion.div>
 
@@ -114,12 +114,12 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Scroll
+      {/*  */}
       <motion.div initial={{opacity:0}} animate={shown?{opacity:1}:{}} transition={{delay:2.2}}
-        style={{ position:'absolute', bottom:'-25px', left:'50%', transform:'translateX(-50%)', display:'flex', flexDirection:'column', alignItems:'center', gap:'10px' }}>
+        style={{ position:'absolute', bottom:'-10px', left:'50%', transform:'translateX(-50%)', display:'flex', flexDirection:'column', alignItems:'center', gap:'20px' }}>
         <span style={{ fontFamily:'var(--sans)', fontSize:'9px', letterSpacing:'.3em', textTransform:'uppercase', color:'rgba(245,245,243,.3)' }}>Défiler</span>
         <div style={{ width:'1px', height:'52px', background:'var(--gold)', transformOrigin:'top', animation:'scrollDrop 2s ease-in-out infinite' }}/>
-      </motion.div>  */}
+      </motion.div>  
 
       {/* Floating year */}
       <div style={{ position:'absolute', right:'48px', bottom:'40px', fontFamily:'var(--serif)', fontSize:'110px', fontWeight:300, color:'rgba(200,169,106,.05)', lineHeight:1, animation:'float 7s ease-in-out infinite', userSelect:'none' }}>1980</div>
