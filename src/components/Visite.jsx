@@ -4,7 +4,7 @@ import { navigate } from '../hooks/useStore'
 const privileges = [
   { titre: 'Dégustations privées', desc: 'Découvrez chaque cuvée directement en cave, guidé par nos vignerons.' },
   { titre: 'Tarifs négociables', desc: 'En visite, les conditions commerciales s\'adaptent à vos besoins réels.' },
-  { titre: 'Obtention de la Carte Rouge', desc: 'Devenez partenaire officiel sur place et accédez à l\'espace B2B.' },
+  { titre: 'Obtention des formats premium', desc: 'Devenez partenaire officiel sur place et accédez à l\'espace B2B.' },
   { titre: 'Sélection sur mesure', desc: 'Composez votre commande bouteille par bouteille, sans contrainte de palier.' },
   { titre: 'Accès à la cave', desc: 'Visitez nos installations : vignes, cuves, ligne d\'embouteillage.' },
   { titre: 'Enlèvement immédiat', desc: 'Repartez avec votre commande le jour même, sans délai de livraison.' },

@@ -10,18 +10,32 @@ const inputStyle = {
 }
 
 function AccessGate({ onUnlock }) {
+  const [mode, setMode] = useState('carte')
   const [carteRouge, setCarteRouge] = useState('')
   const [nif, setNif] = useState('')
+  const [stat, setStat] = useState('')
   const [error, setError] = useState(false)
 
-  const canSubmit = carteRouge.trim() && nif.trim()
+  const canSubmit = mode === 'carte' ? carteRouge.trim() : nif.trim() && stat.trim()
 
   const handleSubmit = e => {
     e.preventDefault()
     if (!canSubmit) return
     setError(false)
-    onUnlock({ carteRouge: carteRouge.trim(), nif: nif.trim() })
+    onUnlock(mode === 'carte'
+      ? { carteRouge: carteRouge.trim() }
+      : { nif: nif.trim(), stat: stat.trim() }
+    )
   }
+
+  const tabStyle = active => ({
+    flex: 1, padding: '10px 16px', border: '1px solid',
+    borderColor: active ? 'var(--gold)' : 'rgba(255,255,255,.1)',
+    background: active ? 'rgba(200,169,106,.1)' : 'transparent',
+    color: active ? 'var(--gold)' : 'rgba(245,245,243,.35)',
+    fontFamily: 'var(--sans)', fontSize: '9px', fontWeight: 500,
+    letterSpacing: '.18em', textTransform: 'uppercase', cursor: 'pointer', transition: 'all .3s',
+  })
 
   return (
     <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .6 }}
@@ -38,38 +52,68 @@ function AccessGate({ onUnlock }) {
       <h2 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(28px,4vw,44px)', fontWeight: 300, color: 'var(--white)', marginBottom: '16px', lineHeight: 1.1 }}>
         Espace <em style={{ fontStyle: 'italic', color: 'var(--gold)' }}>Professionnel</em>
       </h2>
-      <p style={{ fontFamily: 'var(--sans)', fontSize: '13px', color: 'rgba(245,245,243,.4)', lineHeight: 1.8, marginBottom: '40px' }}>
+      <p style={{ fontFamily: 'var(--sans)', fontSize: '13px', color: 'rgba(245,245,243,.4)', lineHeight: 1.8, marginBottom: '32px' }}>
         L'accès aux offres B2B est réservé aux partenaires référencés.<br/>
-        Veuillez renseigner votre <span style={{ color: 'rgba(200,169,106,.7)' }}>Carte Rouge</span> et votre <span style={{ color: 'rgba(200,169,106,.7)' }}>NIF / STATS</span>.
+        Identifiez-vous avec votre <span style={{ color: 'rgba(200,169,106,.7)' }}>Carte Rouge</span> ou votre <span style={{ color: 'rgba(200,169,106,.7)' }}>NIF &amp; STAT</span>.
       </p>
 
+      {/* Toggle */}
+      <div style={{ display: 'flex', gap: '8px', marginBottom: '28px' }}>
+        <button type="button" onClick={() => { setMode('carte'); setError(false) }} style={tabStyle(mode === 'carte')}>
+          Carte Rouge
+        </button>
+        <button type="button" onClick={() => { setMode('nif'); setError(false) }} style={tabStyle(mode === 'nif')}>
+          NIF &amp; STAT
+        </button>
+      </div>
+
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px', textAlign: 'left' }}>
-        <div>
-          <div style={{ fontFamily: 'var(--sans)', fontSize: '9px', letterSpacing: '.2em', textTransform: 'uppercase', color: 'rgba(245,245,243,.35)', marginBottom: '8px' }}>
-            Numéro Carte Rouge *
-          </div>
-          <input
-            value={carteRouge}
-            onChange={e => { setCarteRouge(e.target.value); setError(false) }}
-            placeholder="Ex : CR-00001"
-            style={inputStyle}
-            onFocus={e => e.target.style.borderColor = 'rgba(200,169,106,.5)'}
-            onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,.1)'}
-          />
-        </div>
-        <div>
-          <div style={{ fontFamily: 'var(--sans)', fontSize: '9px', letterSpacing: '.2em', textTransform: 'uppercase', color: 'rgba(245,245,243,.35)', marginBottom: '8px' }}>
-            NIF / STATS *
-          </div>
-          <input
-            value={nif}
-            onChange={e => { setNif(e.target.value); setError(false) }}
-            placeholder="NIF ou numéro STATS"
-            style={inputStyle}
-            onFocus={e => e.target.style.borderColor = 'rgba(200,169,106,.5)'}
-            onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,.1)'}
-          />
-        </div>
+        <AnimatePresence mode="wait">
+          {mode === 'carte' ? (
+            <motion.div key="carte" initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 10 }} transition={{ duration: .25 }}>
+              <div style={{ fontFamily: 'var(--sans)', fontSize: '9px', letterSpacing: '.2em', textTransform: 'uppercase', color: 'rgba(245,245,243,.35)', marginBottom: '8px' }}>
+                Numéro Carte Rouge *
+              </div>
+              <input
+                value={carteRouge}
+                onChange={e => { setCarteRouge(e.target.value); setError(false) }}
+                placeholder="Ex : CR-00001"
+                style={inputStyle}
+                onFocus={e => e.target.style.borderColor = 'rgba(200,169,106,.5)'}
+                onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,.1)'}
+              />
+            </motion.div>
+          ) : (
+            <motion.div key="nif" initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -10 }} transition={{ duration: .25 }} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div>
+                <div style={{ fontFamily: 'var(--sans)', fontSize: '9px', letterSpacing: '.2em', textTransform: 'uppercase', color: 'rgba(245,245,243,.35)', marginBottom: '8px' }}>
+                  NIF *
+                </div>
+                <input
+                  value={nif}
+                  onChange={e => { setNif(e.target.value); setError(false) }}
+                  placeholder="Numéro d'Identification Fiscale"
+                  style={inputStyle}
+                  onFocus={e => e.target.style.borderColor = 'rgba(200,169,106,.5)'}
+                  onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,.1)'}
+                />
+              </div>
+              <div>
+                <div style={{ fontFamily: 'var(--sans)', fontSize: '9px', letterSpacing: '.2em', textTransform: 'uppercase', color: 'rgba(245,245,243,.35)', marginBottom: '8px' }}>
+                  STAT *
+                </div>
+                <input
+                  value={stat}
+                  onChange={e => { setStat(e.target.value); setError(false) }}
+                  placeholder="Numéro STAT"
+                  style={inputStyle}
+                  onFocus={e => e.target.style.borderColor = 'rgba(200,169,106,.5)'}
+                  onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,.1)'}
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {error && (
           <div style={{ fontFamily: 'var(--sans)', fontSize: '11px', color: 'rgba(255,100,100,.75)', letterSpacing: '.05em' }}>
