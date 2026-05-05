@@ -77,7 +77,7 @@ export default function Hero() {
       <div style={{ position:'relative', textAlign:'center', padding:'0 28px', maxWidth:'900px', marginTop:'-2px' }}>
         <motion.div initial={{opacity:0,y:16}} animate={shown?{opacity:1,y:0}:{}} transition={{duration:.8,delay:.3}}
           style={{ fontFamily:'var(--sans)', fontSize:'11px', fontWeight:400, letterSpacing:'.35em', textTransform:'uppercase', color:'var(--gold)', marginBottom:'12px' }}>
-          Depuis 1980 · Ambalavao, Madagascar
+          Depuis 1960 · Ambalavao, Madagascar
         </motion.div>
 
         <h2 style={{ fontFamily:'var(--serif)', fontSize:'clamp(64px,10vw,130px)', fontWeight:300, lineHeight:1.1, color:'var(--white)', marginBottom:'0' }}>
@@ -122,7 +122,7 @@ export default function Hero() {
       </motion.div>  
 
       {/* Floating year */}
-      <div style={{ position:'absolute', right:'48px', bottom:'40px', fontFamily:'var(--serif)', fontSize:'110px', fontWeight:300, color:'rgba(200,169,106,.05)', lineHeight:1, animation:'float 7s ease-in-out infinite', userSelect:'none' }}>1980</div>
+      <div style={{ position:'absolute', right:'48px', bottom:'40px', fontFamily:'var(--serif)', fontSize:'110px', fontWeight:300, color:'rgba(200,169,106,.05)', lineHeight:1, animation:'float 7s ease-in-out infinite', userSelect:'none' }}>1960</div>
     </section>
   )
 }
