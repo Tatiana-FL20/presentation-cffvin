@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { navigate } from '../hooks/useStore'
 import { wines } from '../data/wines'
 
@@ -12,7 +12,7 @@ const inputStyle = {
 }
 
 function StepIndicator({ step }) {
-  const steps = ['Sélection', 'Coordonnées', 'Confirmation']
+  const steps = ['Sélection', 'Coordonnées', 'Confirmation', 'Paiement']
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '0', marginBottom: '48px' }}>
       {steps.map((s, i) => (
@@ -62,9 +62,12 @@ function OrderSummary({ quantities, compact = false }) {
 export default function B2BOrder() {
   const [step, setStep] = useState(0)
   const [quantities, setQuantities] = useState(Object.fromEntries(wines.map(w => [w.id, 0])))
+  const [proIdMode, setProIdMode] = useState('carte')
+  const [payMethod, setPayMethod] = useState('mobile')
+  const [payRef, setPayRef] = useState('')
   const [customer, setCustomer] = useState({
     type: 'entreprise', nom: '', entreprise: '', telephone: '', email: '',
-    adresse: '', ville: '', codePostal: '', carteRouge: '', nif: '', notes: '',
+    adresse: '', ville: '', codePostal: '', carteRouge: '', nif: '', stat: '', notes: '',
   })
 
   const setQty = (id, val) => {
@@ -77,9 +80,10 @@ export default function B2BOrder() {
   const hasInvalid = selected.some(w => quantities[w.id] < 6)
   const canNextStep1 = selected.length > 0 && !hasInvalid
 
-  const canNextStep2 = customer.nom && customer.telephone && customer.email
-    && customer.adresse && customer.ville && customer.carteRouge && customer.nif
-    && (customer.type === 'particulier' || customer.entreprise)
+  const proIdValid = proIdMode === 'carte' ? !!customer.carteRouge : !!(customer.nif && customer.stat)
+  const canNextStep2 = !!(customer.nom && customer.telephone && customer.email
+    && customer.adresse && customer.ville
+    && (customer.type === 'particulier' || (customer.entreprise && proIdValid)))
 
   // Step 0 — Wine selection
   if (step === 0) return (
@@ -215,26 +219,51 @@ export default function B2BOrder() {
               </div>
             </div>
 
-            {/* Carte Rouge + NIF/STATS */}
-            <div style={{ padding: '20px', border: '1px solid rgba(200,169,106,.2)', background: 'rgba(200,169,106,.04)' }}>
-              <div style={{ fontFamily: 'var(--sans)', fontSize: '9px', letterSpacing: '.25em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '16px' }}>
-                Identification Professionnelle
-              </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                <div>
-                  <div style={{ ...label, marginBottom: '8px' }}>Numéro Carte Rouge *</div>
-                  <input value={customer.carteRouge} onChange={setField('carteRouge')} placeholder="Ex : CR-00001" style={inputStyle}
-                    onFocus={e => e.target.style.borderColor = 'rgba(200,169,106,.5)'}
-                    onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,.1)'} />
+            {/* Identification Professionnelle — pro uniquement */}
+            {customer.type === 'entreprise' && (
+              <div>
+                <div style={{ fontFamily: 'var(--sans)', fontSize: '9px', letterSpacing: '.25em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '12px' }}>
+                  Identification Professionnelle
                 </div>
-                <div>
-                  <div style={{ ...label, marginBottom: '8px' }}>NIF / STATS *</div>
-                  <input value={customer.nif} onChange={setField('nif')} placeholder="NIF ou numéro STATS" style={inputStyle}
-                    onFocus={e => e.target.style.borderColor = 'rgba(200,169,106,.5)'}
-                    onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,.1)'} />
+
+                {/* Toggle carte / NIF+STAT */}
+                <div style={{ display: 'flex', gap: '0', marginBottom: '16px' }}>
+                  {[{ key: 'carte', label: 'Carte Rouge' }, { key: 'nif', label: 'NIF & STAT' }].map(opt => (
+                    <button key={opt.key} type="button" onClick={() => setProIdMode(opt.key)}
+                      style={{ flex: 1, padding: '10px', border: '1px solid', borderColor: proIdMode === opt.key ? 'var(--gold)' : 'rgba(255,255,255,.1)', background: proIdMode === opt.key ? 'rgba(200,169,106,.1)' : 'transparent', color: proIdMode === opt.key ? 'var(--gold)' : 'rgba(245,245,243,.35)', fontFamily: 'var(--sans)', fontSize: '9px', fontWeight: 500, letterSpacing: '.15em', textTransform: 'uppercase', cursor: 'pointer', transition: 'all .25s' }}>
+                      {opt.label}
+                    </button>
+                  ))}
                 </div>
+
+                <AnimatePresence mode="wait">
+                  {proIdMode === 'carte' ? (
+                    <motion.div key="carte" initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 8 }} transition={{ duration: .2 }}>
+                      <div style={{ ...label, marginBottom: '8px' }}>Numéro Carte Rouge *</div>
+                      <input value={customer.carteRouge} onChange={setField('carteRouge')} placeholder="Ex : CR-00001" style={inputStyle}
+                        onFocus={e => e.target.style.borderColor = 'rgba(200,169,106,.5)'}
+                        onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,.1)'} />
+                    </motion.div>
+                  ) : (
+                    <motion.div key="nif" initial={{ opacity: 0, x: 8 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -8 }} transition={{ duration: .2 }}
+                      style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                      <div>
+                        <div style={{ ...label, marginBottom: '8px' }}>NIF *</div>
+                        <input value={customer.nif} onChange={setField('nif')} placeholder="Numéro d'Identification Fiscale" style={inputStyle}
+                          onFocus={e => e.target.style.borderColor = 'rgba(200,169,106,.5)'}
+                          onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,.1)'} />
+                      </div>
+                      <div>
+                        <div style={{ ...label, marginBottom: '8px' }}>STAT *</div>
+                        <input value={customer.stat} onChange={setField('stat')} placeholder="Numéro STAT" style={inputStyle}
+                          onFocus={e => e.target.style.borderColor = 'rgba(200,169,106,.5)'}
+                          onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,.1)'} />
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
-            </div>
+            )}
 
             <div>
               <div style={{ ...label, marginBottom: '8px' }}>Adresse de livraison *</div>
@@ -307,8 +336,8 @@ export default function B2BOrder() {
               ['Type', customer.type === 'entreprise' ? 'Entreprise / Pro' : 'Particulier'],
               ['Nom', customer.nom],
               ...(customer.type === 'entreprise' ? [['Entreprise', customer.entreprise]] : []),
-              ['Carte Rouge', customer.carteRouge],
-              ['NIF / STATS', customer.nif],
+              ...(customer.type === 'entreprise' && proIdMode === 'carte' ? [['Carte Rouge', customer.carteRouge]] : []),
+              ...(customer.type === 'entreprise' && proIdMode === 'nif' ? [['NIF', customer.nif], ['STAT', customer.stat]] : []),
               ['Téléphone', customer.telephone],
               ['Email', customer.email],
               ['Adresse', customer.adresse],
@@ -318,7 +347,7 @@ export default function B2BOrder() {
             ].map(([k, v]) => (
               <div key={k}>
                 <div style={{ ...label, marginBottom: '4px' }}>{k}</div>
-                <div style={{ fontFamily: 'var(--sans)', fontSize: '13px', color: k === 'Carte Rouge' || k === 'NIF / STATS' ? 'var(--gold)' : 'var(--white)' }}>{v}</div>
+                <div style={{ fontFamily: 'var(--sans)', fontSize: '13px', color: ['Carte Rouge','NIF','STAT'].includes(k) ? 'var(--gold)' : 'var(--white)' }}>{v}</div>
               </div>
             ))}
           </div>
@@ -335,7 +364,105 @@ export default function B2BOrder() {
     </motion.div>
   )
 
-  // Step 3 — Success
+  // Step 3 — Payment
+  const payValid = payMethod === 'virement' || payMethod === 'facture' || payRef.trim() !== ''
+
+  if (step === 3) return (
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: .5 }}
+      style={{ background: '#0D0D0D', minHeight: '100vh', paddingTop: '120px', paddingBottom: '80px' }}>
+      <div style={{ maxWidth: '760px', margin: '0 auto', padding: '0 48px' }}>
+
+        <button onClick={() => setStep(2)} style={{ fontFamily: 'var(--sans)', fontSize: '10px', letterSpacing: '.2em', textTransform: 'uppercase', color: 'rgba(245,245,243,.4)', background: 'none', border: 'none', cursor: 'pointer', marginBottom: '48px', padding: 0 }}
+          onMouseEnter={e => e.currentTarget.style.color = 'var(--gold)'}
+          onMouseLeave={e => e.currentTarget.style.color = 'rgba(245,245,243,.4)'}
+        >← Modifier la commande</button>
+
+        <StepIndicator step={3} />
+
+        <div style={{ marginBottom: '36px' }}>
+          <div style={{ fontFamily: 'var(--sans)', fontSize: '10px', letterSpacing: '.3em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '16px' }}>Commande B2B</div>
+          <h1 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(32px,4vw,52px)', fontWeight: 300, color: 'var(--white)' }}>Mode de paiement</h1>
+        </div>
+
+        {/* Méthodes */}
+        <div style={{ display: 'flex', gap: '0', marginBottom: '28px' }}>
+          {[
+            { key: 'mobile', label: 'Mobile Money' },
+            { key: 'virement', label: 'Virement' },
+            ...(customer.type === 'entreprise' ? [{ key: 'facture', label: 'Facturation 30j' }] : []),
+          ].map(m => (
+            <button key={m.key} onClick={() => { setPayMethod(m.key); setPayRef('') }}
+              style={{ flex: 1, padding: '14px', border: '1px solid', borderColor: payMethod === m.key ? 'var(--gold)' : 'rgba(255,255,255,.1)', background: payMethod === m.key ? 'rgba(200,169,106,.1)' : 'transparent', color: payMethod === m.key ? 'var(--gold)' : 'rgba(245,245,243,.4)', fontFamily: 'var(--sans)', fontSize: '10px', fontWeight: 500, letterSpacing: '.14em', textTransform: 'uppercase', cursor: 'pointer', transition: 'all .3s' }}>
+              {m.label}
+            </button>
+          ))}
+        </div>
+
+        <AnimatePresence mode="wait">
+          {payMethod === 'mobile' && (
+            <motion.div key="mobile" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: .25 }}
+              style={{ background: 'rgba(200,169,106,.05)', border: '1px solid rgba(200,169,106,.2)', padding: '28px', marginBottom: '24px' }}>
+              <div style={{ fontFamily: 'var(--sans)', fontSize: '9px', letterSpacing: '.25em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '20px' }}>Instructions Mobile Money</div>
+              {[
+                'Envoyez le montant total via MVola / Airtel Money / Orange Money',
+                'Numéro à créditer : 034 22 326 04 (Chan Foui & Fils)',
+                'Entrez la référence de votre transaction ci-dessous',
+              ].map((s, i) => (
+                <div key={i} style={{ display: 'flex', gap: '12px', marginBottom: '10px', fontFamily: 'var(--sans)', fontSize: '12px', color: 'rgba(245,245,243,.6)', lineHeight: 1.6 }}>
+                  <span style={{ color: 'var(--gold)', flexShrink: 0, fontWeight: 600 }}>{i + 1}.</span>
+                  <span>{s}</span>
+                </div>
+              ))}
+              <input value={payRef} onChange={e => setPayRef(e.target.value)}
+                placeholder="Référence de transaction (ex : MVL-XXXXXXX)"
+                style={{ ...inputStyle, marginTop: '16px' }}
+                onFocus={e => e.target.style.borderColor = 'rgba(200,169,106,.5)'}
+                onBlur={e => e.target.style.borderColor = 'rgba(255,255,255,.1)'} />
+            </motion.div>
+          )}
+
+          {payMethod === 'virement' && (
+            <motion.div key="virement" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: .25 }}
+              style={{ background: 'rgba(255,255,255,.03)', border: '1px solid rgba(255,255,255,.08)', padding: '28px', marginBottom: '24px' }}>
+              <div style={{ fontFamily: 'var(--sans)', fontSize: '9px', letterSpacing: '.25em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '20px' }}>Coordonnées bancaires</div>
+              {[
+                ['Bénéficiaire', 'Chan Foui & Fils'],
+                ['Banque', 'BFV-SG Madagascar'],
+                ['RIB', '00005 · XXXX · XXXXXXXX · XX'],
+                ['Objet du virement', `Commande B2B — ${customer.nom}`],
+              ].map(([k, v]) => (
+                <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0', borderBottom: '1px solid rgba(255,255,255,.05)' }}>
+                  <span style={{ fontFamily: 'var(--sans)', fontSize: '11px', color: 'rgba(245,245,243,.35)', letterSpacing: '.1em' }}>{k}</span>
+                  <span style={{ fontFamily: 'var(--sans)', fontSize: '12px', color: 'var(--white)' }}>{v}</span>
+                </div>
+              ))}
+              <p style={{ fontFamily: 'var(--sans)', fontSize: '11px', color: 'rgba(245,245,243,.35)', marginTop: '16px', lineHeight: 1.7 }}>
+                La commande sera traitée dès réception du virement. Pensez à indiquer votre nom en objet.
+              </p>
+            </motion.div>
+          )}
+
+          {payMethod === 'facture' && (
+            <motion.div key="facture" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: .25 }}
+              style={{ background: 'rgba(200,169,106,.04)', border: '1px solid rgba(200,169,106,.2)', padding: '28px', marginBottom: '24px' }}>
+              <div style={{ fontFamily: 'var(--sans)', fontSize: '9px', letterSpacing: '.25em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '16px' }}>Facturation différée</div>
+              <p style={{ fontFamily: 'var(--serif)', fontSize: '16px', fontStyle: 'italic', color: 'rgba(245,245,243,.7)', lineHeight: 1.8, margin: 0 }}>
+                Réservé aux partenaires référencés. Une facture à 30 jours sera émise à réception de la commande et envoyée à <span style={{ color: 'var(--gold)' }}>{customer.email}</span>.
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <button onClick={() => payValid && setStep(4)} disabled={!payValid}
+          style={{ width: '100%', padding: '18px', background: payValid ? 'linear-gradient(90deg,var(--bordeaux),var(--gold))' : 'rgba(255,255,255,.05)', color: payValid ? 'var(--white)' : 'rgba(245,245,243,.2)', border: 'none', fontFamily: 'var(--sans)', fontSize: '10px', fontWeight: 500, letterSpacing: '.2em', textTransform: 'uppercase', cursor: payValid ? 'pointer' : 'default', transition: 'opacity .3s' }}
+          onMouseEnter={e => { if (payValid) e.target.style.opacity = '.85' }}
+          onMouseLeave={e => { if (payValid) e.target.style.opacity = '1' }}
+        >Confirmer la commande</button>
+      </div>
+    </motion.div>
+  )
+
+  // Step 4 — Success
   const totalBottles = wines.filter(w => quantities[w.id] > 0).reduce((s, w) => s + quantities[w.id], 0)
 
   return (

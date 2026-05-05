@@ -63,7 +63,7 @@ export default function Contact() {
               Venez à nos locaux
             </h2>
             <p style={{ fontFamily: 'var(--sans)', fontSize: '13px', color: 'rgba(245,245,243,.5)', lineHeight: 1.75, marginBottom: '20px' }}>
-              Tout se passe ici, à Ambalavao. Rencontrez notre équipe, visitez la cave, et repartez avec votre commande le jour même — aux meilleures conditions.
+              Tout se passe ici, à Ankadimbahoaka. Rencontrez notre équipe, visitez la cave, et repartez avec votre commande le jour même — aux meilleures conditions.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {['Tarifs négociables en direct', 'Enlèvement immédiat possible', 'Obtention des formats premium', 'Dégustation avant achat'].map(item => (

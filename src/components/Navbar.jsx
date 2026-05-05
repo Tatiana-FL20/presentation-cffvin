@@ -20,7 +20,7 @@ export default function Navbar() {
   const nav = [
     { label:'Histoire', href:'#histoire', action:null },
     { label:'Nos Vins', href:'#vins', action:null },
-    { label:'Vignoble', href:'#vignoble', action:()=>document.getElementById('vignoble')?.scrollIntoView({behavior:'smooth',block:'center'}) },
+    { label:'Vignoble', href:'#vignoble', action:()=>{ navigate('home'); setTimeout(()=>document.getElementById('vignoble')?.scrollIntoView({behavior:'smooth',block:'start'}),400) } },
     { label:'Réserver', href:null, action:()=>navigate('reservation') },
     { label:'Wine Club', href:null, action:()=>navigate('wineclub') },
     { label:'Pro / B2B', href:null, action:()=>navigate('b2b') },

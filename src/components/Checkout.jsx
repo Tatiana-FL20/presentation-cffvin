@@ -62,7 +62,7 @@ export default function Checkout() {
                 {step===1 && (
                   <div style={{ display:'flex', flexDirection:'column', gap:'16px' }}>
                     <h3 style={{ fontFamily:'var(--serif)', fontSize:'26px', fontWeight:300, color:'var(--white)', marginBottom:'8px' }}>Adresse de livraison</h3>
-                    {['Adresse complète','Ville','Code postal (si applicable)'].map(ph=>(
+                    {['Adresse complète','Ville','Repère (si applicable)'].map(ph=>(
                       <input key={ph} placeholder={ph} style={{ width:'100%', padding:'14px 18px', background:'rgba(255,255,255,.04)', border:'1px solid rgba(255,255,255,.1)', color:'var(--white)', fontFamily:'var(--sans)', fontSize:'14px', outline:'none' }}
                         onFocus={e=>e.target.style.borderColor='var(--gold)'}
                         onBlur={e=>e.target.style.borderColor='rgba(255,255,255,.1)'}/>

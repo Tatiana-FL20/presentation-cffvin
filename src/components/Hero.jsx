@@ -96,12 +96,12 @@ export default function Hero() {
 
         <motion.p initial={{opacity:0,y:20}} animate={shown?{opacity:1,y:0}:{}} transition={{duration:.8,delay:1.4}}
           style={{ fontFamily:'var(--serif)', fontSize:'clamp(17px,2.2vw,24px)', fontStyle:'italic', color:'rgba(245,245,243,.6)', lineHeight:1.65, maxWidth:'520px', margin:'0 auto 20px' }}>
-          Quarante ans de passion au cœur des hauts plateaux.<br/>Un vin rare, élégant, et profondément malgache.
+          Soixante ans de passion au cœur des hauts plateaux.<br/>Un vin rare, élégant, et profondément malgache.
         </motion.p>
 
         <motion.div initial={{opacity:0,y:20}} animate={shown?{opacity:1,y:0}:{}} transition={{duration:.8,delay:1.7}}
           style={{ display:'flex', gap:'16px', justifyContent:'center', flexWrap:'wrap' }}>
-          <a href="#vins" style={{ padding:'18px 52px', background:'var(--gold)', color:'var(--black)', border:'1px solid var(--gold)', fontFamily:'var(--sans)', fontSize:'10px', fontWeight:500, letterSpacing:'.2em', textTransform:'uppercase', textDecoration:'none', transition:'transform .3s, background .3s, color .3s' }}
+          <a href="#vignoble" style={{ padding:'18px 52px', background:'var(--gold)', color:'var(--black)', border:'1px solid var(--gold)', fontFamily:'var(--sans)', fontSize:'10px', fontWeight:500, letterSpacing:'.2em', textTransform:'uppercase', textDecoration:'none', transition:'transform .3s, background .3s, color .3s' }}
             onMouseEnter={e=>{e.currentTarget.style.transform='scale(1.04)';e.currentTarget.style.background='transparent';e.currentTarget.style.color='var(--gold)'}}
             onMouseLeave={e=>{e.currentTarget.style.transform='scale(1)';e.currentTarget.style.background='var(--gold)';e.currentTarget.style.color='var(--black)'}}>
             Découvrir le domaine

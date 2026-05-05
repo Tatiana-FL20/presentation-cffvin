@@ -184,7 +184,7 @@ export default function B2B() {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
                   <div style={{ width: '44px', height: '44px', border: '1px solid rgba(200,169,106,.3)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: '18px' }}>🏠</div>
                   <div>
-                    <div style={{ fontFamily: 'var(--sans)', fontSize: '9px', letterSpacing: '.25em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '6px' }}>Vous êtes à Ambalavao ?</div>
+                    <div style={{ fontFamily: 'var(--sans)', fontSize: '9px', letterSpacing: '.25em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '6px' }}>Vous êtes à Antananarivo ?</div>
                     <p style={{ fontFamily: 'var(--serif)', fontSize: '16px', fontStyle: 'italic', color: 'rgba(245,245,243,.8)', margin: 0, lineHeight: 1.4 }}>
                       Venez directement dans nos locaux — tarifs négociables, enlèvement immédiat, sélection sur mesure.
                     </p>
