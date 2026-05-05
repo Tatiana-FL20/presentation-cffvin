@@ -2,10 +2,10 @@ import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 
 const chapters = [
-  { year:'1980', title:'Les Origines', sub:'La première vigne', text:"Sur les hauts plateaux de l'Imerina, à 1 200 mètres d'altitude, la famille Chan Foui plante les premières vignes. Un pari audacieux sur une terre volcanique rouge, portée par une conviction : Madagascar peut produire un grand vin.", color:'#6E0F1A' },
-  { year:'1990', title:'Le Terroir', sub:'Une signature unique', text:"Les nuits fraîches et les journées ensoleillées créent un microclimat exceptionnel. Le sol volcanique, riche en fer et en minéraux, confère à chaque cuvée une complexité aromatique que nulle autre région au monde ne peut reproduire.", color:'#4A5D23' },
-  { year:'2000', title:'La Production', sub:'Viticulteur · Encaveur · Embouteilleur · Grossiste', text:"De la vigne à la livraison, Chan Foui & Fils maîtrise chaque maillon de la chaîne. Viticulteurs sur leurs propres parcelles, encaveurs dans leurs caves à Ambalavao, embouteilleurs avec leurs propres lignes, grossistes pour tout Madagascar. Une intégration rare qui garantit qualité et authenticité absolues.", color:'#C8A96A' },
-  { year:'Aujourd\'hui', title:'La Philosophie', sub:'Perpétuer · Évoluer · Innover', text:"Chan Foui & Fils n'est pas seulement un producteur de vin. C'est une maison qui croit que Madagascar a quelque chose de rare à offrir au monde — une authenticité, une singularité, une âme. Et cette conviction guide chaque décision.", color:'#888' },
+  { year:'1980', title:'Les origines', text:"La famille Chan Foui plante les premières vignes à Ambalavao, sur les hauts plateaux à 1 200 mètres. Le Coteau d'Ambalavao naît — premier vin rouge de la maison, premier souffle d'une grande histoire.", color:'#8B2A3D' },
+  { year:'1990', title:"L'expansion", text:"Le Côte de Fianar voit le jour, blanc et rouge. La maison s'impose comme référence nationale, approvisionnant les grands hôtels de Tananarive. La réputation dépasse l'île.", color:'#9B3A4A' },
+  { year:'2000', title:'La consécration', text:"Naissance du Marofavy Rouge et du Maropara Blanc Doux. Ces cuvées premium consacrent Chan Foui & Fils comme le producteur le plus demandé de Madagascar. Une légende est née.", color:'#C4973A' },
+  { year:'2019', title:"L'innovation", text:"Lancement de l'Allerao — cuvée contemporaine audacieuse. La maison regarde vers l'avenir, vers les nouvelles générations et les marchés d'exportation. L'histoire continue.", color:'#E8C47A' },
 ]
 
 function Chapter({ ch, index }) {
@@ -22,7 +22,6 @@ function Chapter({ ch, index }) {
       <div style={{ textAlign: isEven ? 'right' : 'left', gridColumn: isEven ? 1 : 3, gridRow:1 }}>
         {isEven && (
           <div style={{ paddingRight:'24px' }}>
-            <div style={{ fontFamily:'var(--sans)', fontSize:'10px', letterSpacing:'.25em', textTransform:'uppercase', color:'var(--gold)', marginBottom:'12px' }}>{ch.sub}</div>
             <h3 style={{ fontFamily:'var(--serif)', fontSize:'clamp(32px,4vw,52px)', fontWeight:300, color:'var(--white)', marginBottom:'20px', lineHeight:1.1 }}>{ch.title}</h3>
             <p style={{ fontFamily:'var(--serif)', fontSize:'17px', fontStyle:'italic', color:'rgba(245,245,243,.6)', lineHeight:1.85 }}>{ch.text}</p>
           </div>
@@ -40,7 +39,6 @@ function Chapter({ ch, index }) {
       <div style={{ gridColumn: isEven ? 3 : 1, gridRow:1 }}>
         {!isEven && (
           <div style={{ paddingLeft:'24px' }}>
-            <div style={{ fontFamily:'var(--sans)', fontSize:'10px', letterSpacing:'.25em', textTransform:'uppercase', color:'var(--gold)', marginBottom:'12px' }}>{ch.sub}</div>
             <h3 style={{ fontFamily:'var(--serif)', fontSize:'clamp(32px,4vw,52px)', fontWeight:300, color:'var(--white)', marginBottom:'20px', lineHeight:1.1 }}>{ch.title}</h3>
             <p style={{ fontFamily:'var(--serif)', fontSize:'17px', fontStyle:'italic', color:'rgba(245,245,243,.6)', lineHeight:1.85 }}>{ch.text}</p>
           </div>

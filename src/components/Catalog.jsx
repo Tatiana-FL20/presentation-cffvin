@@ -7,7 +7,10 @@ const cats = [
   { key:'all', label:'Toute la gamme' },
   { key:'rouge', label:'Vins Rouges' },
   { key:'blanc', label:'Vins Blancs' },
-  { key:'nouveau', label:'Nouveauté' },
+  { key:'rose', label:'Vins Rosés' },
+  { key:'aperitif', label:'Apéritifs' },
+  { key:'jus', label:'Jus de Raisin' },
+  { key:'spiritueux', label:'Spiritueux' },
 ]
 
 function BottleSVG({ color='#6E0F1A', hovered=false }) {
