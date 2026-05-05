@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { navigate } from '../hooks/useStore'
+import visiteBg from '../assets/visite.png'
 
 const privileges = [
   { titre: 'Dégustations privées', desc: 'Découvrez chaque cuvée directement en cave, guidé par nos vignerons.' },
@@ -20,17 +21,62 @@ export default function Visite() {
 
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
 
+        {/* Photo pleine largeur */}
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: .9 }}
+          style={{ position: 'relative', height: '420px', marginBottom: '80px', overflow: 'hidden' }}>
+          <img src={visiteBg} alt="Nos locaux Chan Foui & Fils" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(8,8,8,.7) 0%, rgba(8,8,8,.2) 60%, rgba(8,8,8,.5) 100%)' }} />
+          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', padding: '0 64px' }}>
+            <div>
+              <div style={{ fontFamily: 'var(--sans)', fontSize: '10px', letterSpacing: '.35em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '16px' }}>Antananarivo, Madagascar</div>
+              <h2 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(38px,5vw,68px)', fontWeight: 300, color: 'var(--white)', lineHeight: 1.05 }}>
+                Tout se passe<br /><em style={{ fontStyle: 'italic', color: 'var(--gold)' }}>dans nos locaux.</em>
+              </h2>
+            </div>
+          </div>
+        </motion.div>
+
         {/* Header */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'end', marginBottom: '80px' }}>
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: .8 }}>
-            <div style={{ fontFamily: 'var(--sans)', fontSize: '10px', letterSpacing: '.35em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '20px' }}>Antananarivo, Madagascar</div>
-            <h2 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(38px,5vw,68px)', fontWeight: 300, color: 'var(--white)', lineHeight: 1.05, marginBottom: '24px' }}>
-              Tout se passe<br />
-              <em style={{ fontStyle: 'italic', color: 'var(--gold)' }}>dans nos locaux.</em>
-            </h2>
-            <p style={{ fontFamily: 'var(--serif)', fontSize: '18px', fontStyle: 'italic', color: 'rgba(245,245,243,.5)', lineHeight: 1.8, maxWidth: '440px' }}>
+            <p style={{ fontFamily: 'var(--serif)', fontSize: '18px', fontStyle: 'italic', color: 'rgba(245,245,243,.5)', lineHeight: 1.8, marginBottom: '40px' }}>
               La vraie expérience Chan Foui & Fils ne s'expédie pas. Elle se vit sur place, entre les vignes et les cuves, avec nos équipes à vos côtés.
             </p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
+              {[
+                {
+                  icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>,
+                  titre: 'Visite guidée des vignes',
+                  desc: 'Parcourez les parcelles à 1 200m d\'altitude avec nos vignerons.',
+                },
+                {
+                  icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M8 22h8M12 11v11M6.6 3h10.8L20 11H4z"/></svg>,
+                  titre: 'Dégustation sur place',
+                  desc: 'Rouges, rosés, vins fruités — goûtez directement à la source.',
+                },
+                {
+                  icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>,
+                  titre: 'Découverte des caves',
+                  desc: 'Fûts, cuves et ligne d\'embouteillage — tout le savoir-faire en direct.',
+                },
+                {
+                  icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>,
+                  titre: 'Tarifs négociables',
+                  desc: 'En venant sur place, obtenez des conditions adaptées à vos besoins.',
+                },
+              ].map((item, i) => (
+                <motion.div key={item.titre}
+                  initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * .1, duration: .6 }}
+                  style={{ display: 'flex', gap: '16px', alignItems: 'flex-start', padding: '20px 0', borderBottom: i < 3 ? '1px solid rgba(255,255,255,.05)' : 'none' }}>
+                  <div style={{ color: 'var(--gold)', flexShrink: 0, marginTop: '2px', opacity: .8 }}>{item.icon}</div>
+                  <div>
+                    <div style={{ fontFamily: 'var(--sans)', fontSize: '11px', fontWeight: 500, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--white)', marginBottom: '4px' }}>{item.titre}</div>
+                    <div style={{ fontFamily: 'var(--serif)', fontSize: '14px', fontStyle: 'italic', color: 'rgba(245,245,243,.4)', lineHeight: 1.6 }}>{item.desc}</div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
 
           {/* Infos pratiques */}

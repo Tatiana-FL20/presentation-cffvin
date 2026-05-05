@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { wines } from '../data/wines'
 import { addToCart, navigate } from '../hooks/useStore'
 
+const wineImages = import.meta.glob('../assets/vins/*.png', { eager: true })
+
 const cats = [
   { key:'all', label:'Toute la gamme' },
   { key:'rouge', label:'Vins Rouges' },
@@ -13,13 +15,14 @@ const cats = [
   { key:'spiritueux', label:'Spiritueux' },
 ]
 
-function BottleSVG({ color='#6E0F1A', hovered=false }) {
-  return (
-    <svg width="60" height="150" viewBox="0 0 60 150" fill="none" style={{ filter: hovered ? `drop-shadow(0 0 18px ${color}88)` : 'none', transition:'filter .4s', animation: hovered ? 'float 3s ease-in-out infinite' : 'none' }}>
-      <path d="M24 0h12v14c8 3 10 8 10 14v96c0 8-5 14-16 14s-16-6-16-14V28c0-6 2-11 10-14V0z" fill={color}/>
+function WineImage({ wine, hovered }) {
+  const src = wineImages[`../assets/vins/${wine.id}.png`]?.default
+  return src ? (
+    <img src={src} alt={wine.nom} style={{ height:'150px', width:'auto', objectFit:'contain', transition:'transform .4s, filter .4s', transform: hovered ? 'scale(1.06)' : 'scale(1)', filter: hovered ? `drop-shadow(0 0 18px ${wine.color}88)` : 'none' }} />
+  ) : (
+    <svg width="60" height="150" viewBox="0 0 60 150" fill="none" style={{ filter: hovered ? `drop-shadow(0 0 18px ${wine.color}88)` : 'none', transition:'filter .4s' }}>
+      <path d="M24 0h12v14c8 3 10 8 10 14v96c0 8-5 14-16 14s-16-6-16-14V28c0-6 2-11 10-14V0z" fill={wine.color}/>
       <rect x="22" y="50" width="16" height="40" rx="2" fill="rgba(245,245,243,.1)"/>
-      <path d="M22 50h16v8h-16z" fill="rgba(245,245,243,.07)"/>
-      <rect x="28" y="14" width="4" height="10" rx="2" fill={color} opacity=".7"/>
     </svg>
   )
 }
@@ -43,7 +46,7 @@ function WineCard({ wine }) {
 
         {/* Bottle */}
         <div style={{ display:'flex', justifyContent:'center', marginBottom:'28px', height:'150px', alignItems:'flex-end' }}>
-          <BottleSVG color={wine.color} hovered={hovered}/>
+          <WineImage wine={wine} hovered={hovered}/>
         </div>
 
         {/* Info — hidden by default, revealed on hover */}

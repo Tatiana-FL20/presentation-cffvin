@@ -3,17 +3,7 @@ import { motion } from 'framer-motion'
 import { addToCart, navigate } from '../hooks/useStore'
 import AromWheel from './AromWheel'
 
-function BottleLarge({ color }) {
-  return (
-    <svg width="120" height="300" viewBox="0 0 120 300" fill="none" style={{ animation:'float 5s ease-in-out infinite', filter:`drop-shadow(0 0 40px ${color}55)` }}>
-      <path d="M48 0h24v28c16 5 20 14 20 26v192c0 16-10 28-32 28s-32-12-32-28V54c0-12 4-21 20-26V0z" fill={color}/>
-      <path d="M44 80h32v80h-32z" rx="4" fill="rgba(245,245,243,.08)"/>
-      <path d="M44 80h32v16h-32z" fill="rgba(245,245,243,.05)"/>
-      <path d="M54 28h12v20h-12z" rx="3" fill={color} opacity=".6"/>
-      <ellipse cx="60" cy="88" rx="10" ry="6" fill="rgba(255,255,255,.04)"/>
-    </svg>
-  )
-}
+const wineImages = import.meta.glob('../assets/vins/*.png', { eager: true })
 
 export default function ProductPage({ wine }) {
   const [qty, setQty] = useState(1)
@@ -41,7 +31,13 @@ export default function ProductPage({ wine }) {
           <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:'48px' }}>
             <div style={{ position:'relative', display:'flex', justifyContent:'center', padding:'60px 0' }}>
               <div style={{ position:'absolute', inset:0, background:`radial-gradient(circle at center, ${wine.color}22 0%, transparent 70%)` }}/>
-              <BottleLarge color={wine.color}/>
+              {wineImages[`../assets/vins/${wine.id}.png`]?.default
+                ? <img src={wineImages[`../assets/vins/${wine.id}.png`].default} alt={wine.nom} style={{ height:'300px', width:'auto', objectFit:'contain', animation:'float 5s ease-in-out infinite', filter:`drop-shadow(0 0 40px ${wine.color}55)` }} />
+                : <svg width="120" height="300" viewBox="0 0 120 300" fill="none" style={{ animation:'float 5s ease-in-out infinite', filter:`drop-shadow(0 0 40px ${wine.color}55)` }}>
+                    <path d="M48 0h24v28c16 5 20 14 20 26v192c0 16-10 28-32 28s-32-12-32-28V54c0-12 4-21 20-26V0z" fill={wine.color}/>
+                    <path d="M44 80h32v80h-32z" fill="rgba(245,245,243,.08)"/>
+                  </svg>
+              }
             </div>
             {/* Arom wheel */}
             <div style={{ textAlign:'center' }}>
