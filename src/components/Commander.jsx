@@ -2,8 +2,8 @@ import { useState, useRef, useEffect } from 'react'
 
 const vinsDisponibles = [
   "Coteau d'Ambalavao Rouge", "Vin Champêtre", "Côte de Fianar Rouge",
-  "Marofavy Rouge (Premium)", "Coteau d'Ambalavao Blanc", "Côte de Fianar Blanc",
-  "Maropara Blanc Doux", "Allerao (Nouveauté 2019)"
+  "maroparasy Rouge (Premium)", "Coteau d'Ambalavao Blanc", "Côte de Fianar Blanc",
+  "maroparasyBlanc Doux", "aperao (Nouveauté 2019)"
 ]
 
 export default function Commander() {

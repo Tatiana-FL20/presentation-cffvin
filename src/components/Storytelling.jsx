@@ -4,8 +4,8 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 const chapters = [
   { year:'1980', title:'Les origines', text:"La famille Chan Foui plante les premières vignes à Ambalavao, sur les hauts plateaux à 1 200 mètres. Le Coteau d'Ambalavao naît — premier vin rouge de la maison, premier souffle d'une grande histoire.", color:'#8B2A3D' },
   { year:'1990', title:"L'expansion", text:"Le Côte de Fianar voit le jour, blanc et rouge. La maison s'impose comme référence nationale, approvisionnant les grands hôtels de Tananarive. La réputation dépasse l'île.", color:'#9B3A4A' },
-  { year:'2000', title:'La consécration', text:"Naissance du Marofavy Rouge et du Maropara Blanc Doux. Ces cuvées premium consacrent Chan Foui & Fils comme le producteur le plus demandé de Madagascar. Une légende est née.", color:'#C4973A' },
-  { year:'2019', title:"L'innovation", text:"Lancement de l'Allerao — cuvée contemporaine audacieuse. La maison regarde vers l'avenir, vers les nouvelles générations et les marchés d'exportation. L'histoire continue.", color:'#E8C47A' },
+  { year:'2000', title:'La consécration', text:"Naissance du maroparasy Rouge et du maroparasyBlanc Doux. Ces cuvées premium consacrent Chan Foui & Fils comme le producteur le plus demandé de Madagascar. Une légende est née.", color:'#C4973A' },
+  { year:'2019', title:"L'innovation", text:"Lancement de l'aperao — cuvée contemporaine audacieuse. La maison regarde vers l'avenir, vers les nouvelles générations et les marchés d'exportation. L'histoire continue.", color:'#E8C47A' },
 ]
 
 function Chapter({ ch, index }) {

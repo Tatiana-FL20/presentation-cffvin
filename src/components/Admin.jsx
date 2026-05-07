@@ -18,8 +18,8 @@ const reservations = [
 ]
 
 const commandes = [
-  { id:'C001', client:'Hôtel Colbert', type:'B2B', date:'20 Avr 2025', vins:'Marofavy ×24, Côte de Fianar ×12', montant:1188000, statut:'livré' },
-  { id:'C002', client:'Fara Andriamaro', type:'B2C', date:'19 Avr 2025', vins:'Maropara ×2, Allerao ×1', montant:81000, statut:'expédié' },
+  { id:'C001', client:'Hôtel Colbert', type:'B2B', date:'20 Avr 2025', vins:'maroparasy ×24, Côte de Fianar ×12', montant:1188000, statut:'livré' },
+  { id:'C002', client:'Fara Andriamaro', type:'B2C', date:'19 Avr 2025', vins:'maroparasy×2, aperao ×1', montant:81000, statut:'expédié' },
   { id:'C003', client:'Restaurant Sakamanga', type:'B2B', date:'18 Avr 2025', vins:'Côte de Fianar Blanc ×48', montant:840000, statut:'livré' },
   { id:'C004', client:'Club Réserve — Ny Ando', type:'Club', date:'17 Avr 2025', vins:'Sélection mensuelle ×4', montant:85000, statut:'expédié' },
   { id:'C005', client:'Lanto Rabarison', type:'B2C', date:'16 Avr 2025', vins:'Coteau d\'Ambalavao ×6', montant:108000, statut:'en préparation' },

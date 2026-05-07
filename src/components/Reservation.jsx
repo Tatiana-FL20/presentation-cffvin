@@ -10,7 +10,7 @@ const experiences = [
     prix: '25 000 Ar / pers.',
     priceNum: 25000,
     desc: 'Visite guidée des vignes et des caves, suivie d\'une dégustation de 3 cuvées emblématiques.',
-    vins: ['Coteau d\'Ambalavao', 'Côte de Fianar', 'Maropara Blanc Doux'],
+    vins: ['Coteau d\'Ambalavao', 'Côte de Fianar', 'maroparasyBlanc Doux'],
     max: 8,
     icon: '🍇',
   },
