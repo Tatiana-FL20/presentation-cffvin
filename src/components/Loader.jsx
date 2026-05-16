@@ -19,7 +19,7 @@ export default function Loader({ onDone }) {
     <AnimatePresence>
       {!done && (
         <motion.div exit={{ opacity:0 }} transition={{ duration:.6, ease:'easeInOut' }}
-          style={{ position:'fixed', inset:0, background:'#0B0B0B', zIndex:9995, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'32px' }}>
+          style={{ position:'fixed', inset:0, background:'#222325', zIndex:9995, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'32px' }}>
           <motion.div initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ duration:.8 }}
             style={{ textAlign:'center' }}>
             <div style={{ fontFamily:'var(--serif)', fontSize:'48px', fontWeight:300, color:'var(--white)', letterSpacing:'0.05em', lineHeight:1 }}>
@@ -28,7 +28,7 @@ export default function Loader({ onDone }) {
             <div style={{ fontFamily:'var(--serif)', fontSize:'18px', color:'rgba(245,245,243,.5)', fontStyle:'italic', marginTop:'8px' }}>Chan Foui & Fils</div>
           </motion.div>
 
-          <div style={{ width:'200px', height:'1px', background:'rgba(200,169,106,.15)', position:'relative', overflow:'hidden' }}>
+          <div style={{ width:'200px', height:'1px', background:'rgba(221,43,33,.15)', position:'relative', overflow:'hidden' }}>
             <motion.div style={{ position:'absolute', left:0, top:0, height:'100%', background:'var(--gold)', width: pct+'%', transition:'width .1s linear' }} />
           </div>
           <div style={{ fontFamily:'var(--sans)', fontSize:'11px', letterSpacing:'0.3em', color:'rgba(245,245,243,.3)' }}>{pct}%</div>

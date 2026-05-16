@@ -3,15 +3,15 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --black:    #0B0B0B;
-  --white:    #F5F5F3;
-  --bordeaux: #6E0F1A;
-  --gold:     #C8A96A;
-  --gold-light: #E2C98A;
-  --olive:    #4A5D23;
-  --gray:     #1A1A1A;
-  --gray-mid: #2E2E2E;
-  --gray-light: #888;
+  --black:    #222325;
+  --white:    #ffffff;
+  --bordeaux: #dd2b21;
+  --gold:     #dd2b21;
+  --gold-light: #f07570;
+  --olive:    #4a8070;
+  --gray:     #f0f4f3;
+  --gray-mid: #e4f0ef;
+  --gray-light: #6b7578;
   --serif: 'Cormorant Garamond', Georgia, serif;
   --sans:  'Inter', Helvetica, sans-serif;
 }
@@ -19,19 +19,19 @@
 html { scroll-behavior: smooth; }
 
 body {
-  background: var(--black);
-  color: var(--white);
+  background: #f5f8f7;
+  color: var(--black);
   font-family: var(--sans);
   font-weight: 300;
   overflow-x: hidden;
   cursor: none;
 }
 
-::selection { background: var(--gold); color: var(--black); }
+::selection { background: var(--gold); color: var(--white); }
 
 /* Custom cursor */
 #cursor      { width:10px; height:10px; background:var(--gold); border-radius:50%; position:fixed; top:0; left:0; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:width .3s,height .3s,background .3s,border .3s; }
-#cursor-ring { width:36px; height:36px; border:1px solid rgba(200,169,106,.5); border-radius:50%; position:fixed; top:0; left:0; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:width .3s,height .3s,opacity .3s; }
+#cursor-ring { width:36px; height:36px; border:1px solid rgba(221,43,33,.5); border-radius:50%; position:fixed; top:0; left:0; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:width .3s,height .3s,opacity .3s; }
 body.cursor-hover #cursor      { width:56px; height:56px; background:transparent; border:1px solid var(--gold); }
 body.cursor-hover #cursor-ring { opacity:0; }
 
@@ -58,7 +58,7 @@ body::after { content:''; position:fixed; inset:0; background:url("data:image/sv
 @keyframes scrollDrop { 0%{transform:scaleY(0) translateY(-100%);opacity:1} 100%{transform:scaleY(1) translateY(0);opacity:0} }
 
 /* Glow pulse */
-@keyframes glow { 0%,100%{box-shadow:0 0 20px rgba(200,169,106,.3)} 50%{box-shadow:0 0 60px rgba(200,169,106,.7),0 0 120px rgba(200,169,106,.3)} }
+@keyframes glow { 0%,100%{box-shadow:0 0 20px rgba(221,43,33,.3)} 50%{box-shadow:0 0 60px rgba(221,43,33,.7),0 0 120px rgba(221,43,33,.3)} }
 
 /* Spinner */
 @keyframes spin { to{transform:rotate(360deg)} }

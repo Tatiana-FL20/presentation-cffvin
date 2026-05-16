@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+﻿import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 
 const chapters = [
@@ -22,8 +22,8 @@ function Chapter({ ch, index }) {
       <div style={{ textAlign: isEven ? 'right' : 'left', gridColumn: isEven ? 1 : 3, gridRow:1 }}>
         {isEven && (
           <div style={{ paddingRight:'24px' }}>
-            <h3 style={{ fontFamily:'var(--serif)', fontSize:'clamp(32px,4vw,52px)', fontWeight:300, color:'var(--white)', marginBottom:'20px', lineHeight:1.1 }}>{ch.title}</h3>
-            <p style={{ fontFamily:'var(--serif)', fontSize:'17px', fontStyle:'italic', color:'rgba(245,245,243,.6)', lineHeight:1.85 }}>{ch.text}</p>
+            <h3 style={{ fontFamily:'var(--serif)', fontSize:'clamp(32px,4vw,52px)', fontWeight:300, color:'var(--black)', marginBottom:'20px', lineHeight:1.1 }}>{ch.title}</h3>
+            <p style={{ fontFamily:'var(--serif)', fontSize:'17px', fontStyle:'italic', color:'rgba(34,35,37,.6)', lineHeight:1.85 }}>{ch.text}</p>
           </div>
         )}
       </div>
@@ -32,15 +32,15 @@ function Chapter({ ch, index }) {
       <div style={{ gridColumn:2, gridRow:1, display:'flex', flexDirection:'column', alignItems:'center', gap:'8px', paddingTop:'8px' }}>
         <div style={{ width:'10px', height:'10px', borderRadius:'50%', background:ch.color, boxShadow:`0 0 20px ${ch.color}88` }}/>
         <motion.div style={{ width:'1px', height:lineH, background:`linear-gradient(to bottom, ${ch.color}, transparent)`, minHeight:'160px' }}/>
-        <div style={{ fontFamily:'var(--serif)', fontSize:'13px', color:'rgba(245,245,243,.35)', writingMode:'vertical-rl' }}>{ch.year}</div>
+        <div style={{ fontFamily:'var(--serif)', fontSize:'13px', color:'rgba(34,35,37,.35)', writingMode:'vertical-rl' }}>{ch.year}</div>
       </div>
 
       {/* Right */}
       <div style={{ gridColumn: isEven ? 3 : 1, gridRow:1 }}>
         {!isEven && (
           <div style={{ paddingLeft:'24px' }}>
-            <h3 style={{ fontFamily:'var(--serif)', fontSize:'clamp(32px,4vw,52px)', fontWeight:300, color:'var(--white)', marginBottom:'20px', lineHeight:1.1 }}>{ch.title}</h3>
-            <p style={{ fontFamily:'var(--serif)', fontSize:'17px', fontStyle:'italic', color:'rgba(245,245,243,.6)', lineHeight:1.85 }}>{ch.text}</p>
+            <h3 style={{ fontFamily:'var(--serif)', fontSize:'clamp(32px,4vw,52px)', fontWeight:300, color:'var(--black)', marginBottom:'20px', lineHeight:1.1 }}>{ch.title}</h3>
+            <p style={{ fontFamily:'var(--serif)', fontSize:'17px', fontStyle:'italic', color:'rgba(34,35,37,.6)', lineHeight:1.85 }}>{ch.text}</p>
           </div>
         )}
       </div>
@@ -50,12 +50,12 @@ function Chapter({ ch, index }) {
 
 export default function Storytelling() {
   return (
-    <section id="histoire" style={{ background:'var(--black)', padding:'120px 80px', position:'relative', overflow:'hidden' }}>
-      <div style={{ position:'absolute', top:'-300px', right:'-300px', width:'700px', height:'700px', borderRadius:'50%', background:'radial-gradient(circle, rgba(110,15,26,.15) 0%, transparent 70%)', pointerEvents:'none' }}/>
+    <section id="histoire" style={{ background:'transparent', padding:'120px 80px', position:'relative', overflow:'hidden' }}>
+      <div style={{ position:'absolute', top:'-300px', right:'-300px', width:'700px', height:'700px', borderRadius:'50%', background:'radial-gradient(circle, rgba(221,43,33,.15) 0%, transparent 70%)', pointerEvents:'none' }}/>
       <div style={{ maxWidth:'1000px', margin:'0 auto' }}>
         <motion.div initial={{opacity:0,y:40}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{duration:1}} style={{ textAlign:'center', marginBottom:'96px' }}>
           <div style={{ fontFamily:'var(--sans)', fontSize:'10px', letterSpacing:'.35em', textTransform:'uppercase', color:'var(--gold)', marginBottom:'20px' }}>L'histoire</div>
-          <h2 style={{ fontFamily:'var(--serif)', fontSize:'clamp(44px,6vw,80px)', fontWeight:300, color:'var(--white)', lineHeight:1.05 }}>
+          <h2 style={{ fontFamily:'var(--serif)', fontSize:'clamp(44px,6vw,80px)', fontWeight:300, color:'var(--black)', lineHeight:1.05 }}>
             Une <em style={{ fontStyle:'italic', color:'var(--gold)' }}>saga</em> malgache
           </h2>
         </motion.div>

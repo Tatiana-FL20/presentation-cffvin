@@ -3,7 +3,7 @@ import { navigate } from '../hooks/useStore'
 
 export default function Footer() {
   return (
-    <footer style={{ background:'#060606', padding:'72px 48px 40px', borderTop:'1px solid rgba(200,169,106,.1)' }}>
+    <footer style={{ background:'#1c1e20', padding:'72px 48px 40px', borderTop:'1px solid rgba(221,43,33,.1)' }}>
       <div style={{ maxWidth:'1200px', margin:'0 auto' }}>
         <div style={{ display:'grid', gridTemplateColumns:'2fr 1fr 1fr', gap:'60px', marginBottom:'64px' }}>
           <div>
@@ -15,7 +15,7 @@ export default function Footer() {
             </p>
             <div style={{ display:'flex', flexWrap:'wrap', gap:'8px' }}>
               {['Viticulteur','Encaveur','Embouteilleur','Grossiste'].map(m=>(
-                <span key={m} style={{ fontFamily:'var(--sans)', fontSize:'9px', fontWeight:500, letterSpacing:'.18em', textTransform:'uppercase', color:'rgba(200,169,106,.55)', border:'1px solid rgba(200,169,106,.2)', padding:'4px 10px' }}>{m}</span>
+                <span key={m} style={{ fontFamily:'var(--sans)', fontSize:'9px', fontWeight:500, letterSpacing:'.18em', textTransform:'uppercase', color:'rgba(221,43,33,.55)', border:'1px solid rgba(221,43,33,.2)', padding:'4px 10px' }}>{m}</span>
               ))}
             </div>
           </div>
@@ -36,7 +36,7 @@ export default function Footer() {
             <div style={{ display:'flex', flexDirection:'column', gap:'14px', marginBottom:'20px' }}>
               {/* Adresse */}
               <div style={{ display:'flex', gap:'12px', alignItems:'flex-start' }}>
-                <div style={{ flexShrink:0, marginTop:'1px', color:'rgba(200,169,106,.6)' }}>
+                <div style={{ flexShrink:0, marginTop:'1px', color:'rgba(221,43,33,.6)' }}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
                     <circle cx="12" cy="10" r="3"/>
@@ -49,7 +49,7 @@ export default function Footer() {
 
               {/* Téléphone */}
               <div style={{ display:'flex', gap:'12px', alignItems:'center' }}>
-                <div style={{ flexShrink:0, color:'rgba(200,169,106,.6)' }}>
+                <div style={{ flexShrink:0, color:'rgba(221,43,33,.6)' }}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l1.32-1.32a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
                   </svg>
@@ -63,7 +63,7 @@ export default function Footer() {
 
               {/* Email */}
               <div style={{ display:'flex', gap:'12px', alignItems:'center' }}>
-                <div style={{ flexShrink:0, color:'rgba(200,169,106,.6)' }}>
+                <div style={{ flexShrink:0, color:'rgba(221,43,33,.6)' }}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
                     <polyline points="22,6 12,13 2,6"/>
@@ -78,13 +78,13 @@ export default function Footer() {
             </div>
 
             {/* Horaires */}
-            <div style={{ padding:'14px 16px', border:'1px solid rgba(200,169,106,.12)', background:'rgba(200,169,106,.04)' }}>
+            <div style={{ padding:'14px 16px', border:'1px solid rgba(221,43,33,.12)', background:'rgba(221,43,33,.04)' }}>
               <div style={{ display:'flex', alignItems:'center', gap:'8px', marginBottom:'10px' }}>
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="rgba(200,169,106,.7)" strokeWidth="2">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="rgba(221,43,33,.7)" strokeWidth="2">
                   <circle cx="12" cy="12" r="10"/>
                   <polyline points="12,6 12,12 16,14"/>
                 </svg>
-                <div style={{ fontFamily:'var(--sans)', fontSize:'8px', letterSpacing:'.2em', textTransform:'uppercase', color:'rgba(200,169,106,.6)' }}>Horaires d'ouverture</div>
+                <div style={{ fontFamily:'var(--sans)', fontSize:'8px', letterSpacing:'.2em', textTransform:'uppercase', color:'rgba(221,43,33,.6)' }}>Horaires d'ouverture</div>
               </div>
               <div style={{ display:'flex', flexDirection:'column', gap:'5px' }}>
                 <div style={{ display:'flex', justifyContent:'space-between', fontFamily:'var(--sans)', fontSize:'11px' }}>

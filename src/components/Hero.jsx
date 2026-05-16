@@ -29,7 +29,7 @@ export default function Hero() {
         if(p.y<-5||p.life>1) { p.x=Math.random()*w; p.y=h+5; p.life=0 }
         const pulse = Math.sin(p.life*Math.PI)
         ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2)
-        ctx.fillStyle=`rgba(200,169,106,${p.alpha*pulse})`; ctx.fill()
+        ctx.fillStyle=`rgba(221,43,33,${p.alpha*pulse})`; ctx.fill()
       })
       animId=requestAnimationFrame(draw)
     }
@@ -44,17 +44,17 @@ export default function Hero() {
   }, [])
 
   return (
-    <section style={{ minHeight:'100vh', position:'relative', overflow:'hidden', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', background:'#0B0B0B' }}>
+    <section style={{ minHeight:'100vh', position:'relative', overflow:'hidden', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', background:'#222325' }}>
       {/* Parallax bg */}
       <div id="hero-parallax" style={{ position:'absolute', inset:'-5%', transition:'transform .9s cubic-bezier(.16,1,.3,1)' }}>
-        <div style={{ width:'100%', height:'100%', background:'radial-gradient(ellipse 80% 80% at 40% 55%, #2A0610 0%, #0B0B0B 70%)' }} />
+        <div style={{ width:'100%', height:'100%', background:'radial-gradient(ellipse 80% 80% at 40% 55%, #3a0d0a 0%, #222325 70%)' }} />
         {/* Vineyard silhouette */}
         <svg style={{ position:'absolute', bottom:0, left:0, right:0, width:'100%', opacity:.18 }} viewBox="0 0 1440 400" preserveAspectRatio="xMidYMax slice">
           <path d="M0 400L0 280C100 240 200 200 300 220C400 240 500 180 600 160C700 140 800 180 900 170C1000 160 1100 130 1200 150C1300 170 1380 200 1440 210L1440 400Z" fill="#4A5D23" opacity=".6"/>
           <path d="M0 400L0 320C150 290 280 270 400 280C520 290 620 260 720 250C820 240 950 270 1080 260C1200 250 1340 240 1440 250L1440 400Z" fill="#2A3A15" opacity=".8"/>
           {[...Array(18)].map((_,i)=>(
             <g key={i} transform={`translate(${60+i*82},${280+Math.sin(i)*20})`}>
-              <line x1="0" y1="0" x2="0" y2="120" stroke="#C8A96A" strokeWidth=".6" strokeOpacity=".3"/>
+              <line x1="0" y1="0" x2="0" y2="120" stroke="#dd2b21" strokeWidth=".6" strokeOpacity=".3"/>
               <ellipse cx="0" cy="20" rx="14" ry="9" fill="#4A5D23" fillOpacity=".5"/>
               <ellipse cx="0" cy="40" rx="12" ry="8" fill="#3A4D18" fillOpacity=".5"/>
             </g>
@@ -64,14 +64,14 @@ export default function Hero() {
 
       {/* Diagonal lines */}
       <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', opacity:.06, pointerEvents:'none' }} viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
-        {[...Array(10)].map((_,i)=><line key={i} x1={-100+i*180} y1="0" x2={i*180+300} y2="900" stroke="#C8A96A" strokeWidth=".8"/>)}
+        {[...Array(10)].map((_,i)=><line key={i} x1={-100+i*180} y1="0" x2={i*180+300} y2="900" stroke="#dd2b21" strokeWidth=".8"/>)}
       </svg>
 
       {/* Particles */}
       <canvas ref={canvasRef} style={{ position:'absolute', inset:0, pointerEvents:'none' }}/>
 
       {/* Vignette */}
-      <div style={{ position:'absolute', inset:0, background:'radial-gradient(ellipse at center, transparent 20%, rgba(11,11,11,.8) 100%)' }}/>
+      <div style={{ position:'absolute', inset:0, background:'radial-gradient(ellipse at center, transparent 20%, rgba(34,35,37,.8) 100%)' }}/>
 
       {/* Content */}
       <div style={{ position:'relative', textAlign:'center', padding:'0 28px', maxWidth:'900px', marginTop:'-2px' }}>
@@ -122,7 +122,7 @@ export default function Hero() {
       </motion.div>  
 
       {/* Floating year */}
-      <div style={{ position:'absolute', right:'48px', bottom:'40px', fontFamily:'var(--serif)', fontSize:'110px', fontWeight:300, color:'rgba(200,169,106,.05)', lineHeight:1, animation:'float 7s ease-in-out infinite', userSelect:'none' }}>1960</div>
+      <div style={{ position:'absolute', right:'48px', bottom:'40px', fontFamily:'var(--serif)', fontSize:'110px', fontWeight:300, color:'rgba(221,43,33,.05)', lineHeight:1, animation:'float 7s ease-in-out infinite', userSelect:'none' }}>1960</div>
     </section>
   )
 }

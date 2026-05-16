@@ -1,9 +1,9 @@
-import { useEffect, useRef } from 'react'
+﻿import { useEffect, useRef } from 'react'
 
 const labels = { fruits:'Fruits', floral:'Floral', boise:'Boisé', epices:'Épices', mineral:'Minéral' }
 const keys = ['fruits','floral','boise','epices','mineral']
 
-export default function AromWheel({ aromes, color='#C8A96A' }) {
+export default function AromWheel({ aromes, color='#dd2b21' }) {
   const canvasRef = useRef(null)
 
   useEffect(() => {
@@ -23,13 +23,13 @@ export default function AromWheel({ aromes, color='#C8A96A' }) {
         const x=cx+Math.cos(a)*rr, y=cy+Math.sin(a)*rr
         i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y)
       }
-      ctx.closePath(); ctx.strokeStyle='rgba(255,255,255,.08)'; ctx.lineWidth=1; ctx.stroke()
+      ctx.closePath(); ctx.strokeStyle='rgba(34,35,37,.1)'; ctx.lineWidth=1; ctx.stroke()
     }
     // Spokes
     keys.forEach((_,i) => {
       const a=(i/N)*Math.PI*2-Math.PI/2
       ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+Math.cos(a)*R, cy+Math.sin(a)*R)
-      ctx.strokeStyle='rgba(255,255,255,.08)'; ctx.stroke()
+      ctx.strokeStyle='rgba(34,35,37,.1)'; ctx.stroke()
     })
     // Data polygon
     ctx.beginPath()
@@ -51,7 +51,7 @@ export default function AromWheel({ aromes, color='#C8A96A' }) {
     keys.forEach((k,i) => {
       const a=(i/N)*Math.PI*2-Math.PI/2
       const lx=cx+Math.cos(a)*(R+18), ly=cy+Math.sin(a)*(R+18)
-      ctx.fillStyle='rgba(245,245,243,.5)'; ctx.font='9px Inter,sans-serif'
+      ctx.fillStyle='rgba(34,35,37,.5)'; ctx.font='9px Inter,sans-serif'
       ctx.textAlign='center'; ctx.textBaseline='middle'
       ctx.fillText(labels[k], lx, ly)
     })
