@@ -18,9 +18,9 @@ const cats = [
 function WineImage({ wine, hovered }) {
   const src = wineImages[`../assets/vins/${wine.id}.png`]?.default
   return src ? (
-    <img src={src} alt={wine.nom} style={{ height:'150px', width:'auto', objectFit:'contain', transition:'transform .4s, filter .4s', transform: hovered ? 'scale(1.06)' : 'scale(1)', filter: hovered ? `drop-shadow(0 0 18px ${wine.color}88)` : 'none' }} />
+    <img src={src} alt={wine.nom} style={{ height:'150px', width:'auto', objectFit:'contain', transition:'transform .4s', transform: hovered ? 'scale(1.05)' : 'scale(1)' }} />
   ) : (
-    <svg width="60" height="150" viewBox="0 0 60 150" fill="none" style={{ filter: hovered ? `drop-shadow(0 0 18px ${wine.color}88)` : 'none', transition:'filter .4s' }}>
+    <svg width="60" height="150" viewBox="0 0 60 150" fill="none" style={{ transition:'transform .4s', transform: hovered ? 'scale(1.05)' : 'scale(1)' }}>
       <path d="M24 0h12v14c8 3 10 8 10 14v96c0 8-5 14-16 14s-16-6-16-14V28c0-6 2-11 10-14V0z" fill={wine.color}/>
       <rect x="22" y="50" width="16" height="40" rx="2" fill="rgba(34,35,37,.1)"/>
     </svg>
@@ -36,7 +36,7 @@ function WineCard({ wine }) {
       onMouseEnter={()=>setHovered(true)} onMouseLeave={()=>setHovered(false)}
       onClick={()=>navigate('product',wine)}>
 
-      <div style={{ background: hovered ? 'rgba(221,43,33,.06)' : 'rgba(34,35,37,.05)', border:`1px solid ${hovered ? 'rgba(221,43,33,.4)' : 'rgba(34,35,37,.09)'}`, padding:'40px 28px', transition:'all .4s cubic-bezier(.16,1,.3,1)', transform: hovered ? 'translateY(-8px)' : 'translateY(0)' }}>
+      <div style={{ background:'#ffffff', border:'1px solid rgba(34,35,37,.08)', padding:'40px 28px', transition:'all .4s cubic-bezier(.16,1,.3,1)', transform: hovered ? 'translateY(-6px)' : 'translateY(0)', boxShadow: hovered ? '0 12px 40px rgba(34,35,37,.08)' : '0 2px 8px rgba(34,35,37,.04)' }}>
 
         {/* Badges */}
         <div style={{ position:'absolute', top:'16px', right:'16px', display:'flex', gap:'6px', flexDirection:'column', alignItems:'flex-end' }}>
@@ -72,9 +72,8 @@ export default function Catalog() {
   const filtered = cat==='all' ? wines : wines.filter(w=>w.categorie===cat)
 
   return (
-    <section id="vins" style={{ background:'#0F0F0F', padding:'120px 48px', position:'relative' }}>
-      <div style={{ position:'absolute', inset:0, backgroundImage:'repeating-linear-gradient(0deg,transparent,transparent 80px,rgba(221,43,33,.015) 80px,rgba(221,43,33,.015) 81px)', pointerEvents:'none' }}/>
-      <div style={{ maxWidth:'1200px', margin:'0 auto', position:'relative' }}>
+    <section id="vins" style={{ background:'transparent', padding:'120px 48px' }}>
+      <div style={{ maxWidth:'1200px', margin:'0 auto' }}>
 
         <motion.div initial={{opacity:0,y:40}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{duration:.9}}
           style={{ textAlign:'center', marginBottom:'64px' }}>
